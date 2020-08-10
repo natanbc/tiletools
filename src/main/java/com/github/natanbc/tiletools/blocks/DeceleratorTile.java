@@ -57,6 +57,7 @@ public class DeceleratorTile extends TileEntity implements ITickableTileEntity {
             //box it
             if(te instanceof ITickableTileEntity) {
                 if(te instanceof DeceleratorTile || TileEntityDecelerator.isBoxed(te)) continue;
+                if(Config.isDeceleratorBlacklisted(te)) continue;
                 world.setTileEntity(p, TileEntityDecelerator
                                                .decelerate(this, te, Config.DECELERATOR_FACTOR.get()));
             }

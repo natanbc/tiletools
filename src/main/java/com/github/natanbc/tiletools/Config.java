@@ -1,9 +1,15 @@
 package com.github.natanbc.tiletools;
 
 import com.github.natanbc.tiletools.util.AcceleratorTpsHelper;
+import net.minecraft.block.BlockState;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
+
+import java.util.Collections;
+import java.util.List;
 
 public class Config {
     public static final ForgeConfigSpec CLIENT;
@@ -12,12 +18,15 @@ public class Config {
     
     public static final ForgeConfigSpec.IntValue ACCELERATOR_RADIUS;
     public static final ForgeConfigSpec.IntValue ACCELERATOR_FACTOR;
+    public static final ForgeConfigSpec.ConfigValue<List<? extends String>> ACCELERATOR_BLACKLIST;
     public static final ForgeConfigSpec.EnumValue<AcceleratorTpsHelper> ACCELERATOR_TPS_HELPER;
     public static final ForgeConfigSpec.IntValue DECELERATOR_RADIUS;
     public static final ForgeConfigSpec.IntValue DECELERATOR_FACTOR;
+    public static final ForgeConfigSpec.ConfigValue<List<? extends String>> DECELERATOR_BLACKLIST;
     public static final ForgeConfigSpec.IntValue GROWTH_FACTOR;
     public static final ForgeConfigSpec.IntValue BOTTLE_RECHARGE_TIME;
     public static final ForgeConfigSpec.IntValue BOTTLE_RECHARGE_TIER_SCALE;
+    public static final ForgeConfigSpec.ConfigValue<List<? extends String>> BOTTLE_BLACKLIST;
     public static final ForgeConfigSpec.BooleanValue LOG_CODEGEN_ABORTS;
     public static final ForgeConfigSpec.BooleanValue DUMP_CODEGEN;
     
@@ -38,6 +47,10 @@ public class Config {
                               "should receive per world tick. Setting to 0 disables the",
                               "accelerator")
                      .defineInRange("factor", 10, 0, 100);
+            ACCELERATOR_BLACKLIST = common
+                     .comment("List of tile entities that should not be accelerated")
+                     .defineList("blacklist",
+                             Collections.singletonList("tiletools:decelerator"), _1 -> true);
             ACCELERATOR_TPS_HELPER = common
                      .comment("Determines how the accelerator slows down it's additional",
                               "ticks when TPS is low. Valid methods are:",
@@ -60,6 +73,10 @@ public class Config {
                              "should receive to actually tick. Setting to 1 or less disables",
                              "the decelerator")
                      .defineInRange("factor", 10, 0, 100);
+            DECELERATOR_BLACKLIST = common
+                     .comment("List of tile entities that should not be decelerated")
+                     .defineList("blacklist",
+                            Collections.singletonList("tiletools:accelerator"), _1 -> true);
         }
         
         try(Section s = section(common, "growth_accelerator")) {
@@ -87,6 +104,9 @@ public class Config {
                              "to lower tiers.",
                              "Setting this to 0 makes each bottle single-use")
                     .defineInRange("tier_scale", 5, 0, 50);
+            BOTTLE_BLACKLIST = common
+                    .comment("Blocks that cannot be picked up by the bottle")
+                    .defineList("blacklist", Collections.emptyList(), _1 -> true);
         }
         
         try(Section s = section(common, "debugging")) {
@@ -111,6 +131,24 @@ public class Config {
         register(ModConfig.Type.CLIENT, CLIENT);
         register(ModConfig.Type.COMMON, COMMON);
         register(ModConfig.Type.SERVER, SERVER);
+    }
+    
+    public static boolean isAcceleratorBlacklisted(TileEntity te) {
+        return isInList(ACCELERATOR_BLACKLIST.get(), te);
+    }
+    
+    public static boolean isDeceleratorBlacklisted(TileEntity te) {
+        return isInList(DECELERATOR_BLACKLIST.get(), te);
+    }
+    
+    public static boolean isBottleBlacklisted(BlockState state) {
+        ResourceLocation res = state.getBlock().getRegistryName();
+        return res != null && BOTTLE_BLACKLIST.get().contains(res.toString());
+    }
+    
+    private static boolean isInList(List<? extends String> list, TileEntity te) {
+        ResourceLocation res = te.getType().getRegistryName();
+        return res == null ? list.contains(te.getClass().getName()) : list.contains(res.toString());
     }
     
     private static void register(ModConfig.Type type, ForgeConfigSpec spec) {

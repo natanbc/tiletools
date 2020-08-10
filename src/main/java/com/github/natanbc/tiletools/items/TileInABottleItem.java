@@ -99,7 +99,9 @@ public class TileInABottleItem extends Item {
             //if the block is unbreakable, can't be harvested or the bottle
             //is still recharging, drop it
             if(state.getBlockHardness(world, pos) < 0 ||
-                       state.getHarvestLevel() > getHarvestLevel(s) || s.getDamage() > 0) {
+                       state.getHarvestLevel() > getHarvestLevel(s) ||
+                       Config.isBottleBlacklisted(state) ||
+                       s.getDamage() > 0) {
                 if(context.getPlayer() != null) {
                     context.getPlayer().drop(true);
                 }

@@ -60,6 +60,7 @@ public class AcceleratorTile extends TileEntity implements ITickableTileEntity {
                 TileEntity te = world.getTileEntity(p);
                 if(te instanceof ITickableTileEntity) {
                     if(te instanceof AcceleratorTile) continue;
+                    if(Config.isAcceleratorBlacklisted(te)) continue;
                     //          v -- This starts at 1 because the world itself already ticks
                     //          v    the TE once.
                     for(int i = 1; i < factor; i++) {
