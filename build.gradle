@@ -1,0 +1,124 @@
+//My java 8 reports the version as 1.8.0-internal, which forge interprets
+//as 1.8.0, failing the >= 1.8.0_101 check.
+if(System.getProperty("java.version", "").equals("1.8.0-internal")) {
+    System.setProperty("net.minecraftforge.gradle.test_java", "false")
+}
+
+buildscript {
+    repositories {
+        maven { url = 'https://files.minecraftforge.net/maven' }
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+    }
+}
+apply plugin: 'net.minecraftforge.gradle'
+
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
+
+version = '1.0'
+group = 'com.github.natanbc.tiletools'
+archivesBaseName = 'tiletools'
+
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+
+println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
+minecraft {
+    mappings channel: 'snapshot', version: '20200514-1.16'
+
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                tiletools {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                tiletools {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        data {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+            args '--mod', 'tiletools', '--all', '--output', file('src/generated/resources/')
+
+            mods {
+                tiletools {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+repositories {
+    maven { // JEI
+        url "https://dvs1.progwml6.com/files/maven"
+    }
+    maven { // TOP
+        name 'tterrag maven'
+        url "http://maven.tterrag.com/"
+    }
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.16.1-32.0.97'
+
+    compileOnly fg.deobf("mezz.jei:jei-${jei_version}:api")
+    runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")
+
+    compile fg.deobf(project.dependencies.create("mcjty.theoneprobe:TheOneProbe-${top_version}") {
+        transitive = false
+    })
+}
+
+jar {
+    manifest {
+        attributes([
+            "Specification-Title": "tiletools",
+            "Specification-Vendor": "natanbc",
+            "Specification-Version": "1", // We are version 1 of ourselves
+            "Implementation-Title": project.name,
+            "Implementation-Version": "${version}",
+            "Implementation-Vendor" :"natanbc",
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
+}
+
+// Example configuration to allow publishing using the maven-publish task
+// This is the preferred method to reobfuscate your jar file
+jar.finalizedBy('reobfJar') 
+// However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
+//publish.dependsOn('reobfJar')
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact jar
+        }
+    }
+    repositories {
+        maven {
+            url "file:///${project.projectDir}/mcmodsrepo"
+        }
+    }
+}

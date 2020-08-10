@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "gsg",
+    "gpg",
+    "ggg"
+  ],
+  "key":
+  {
+    "g":
+    {
+      "tag": "forge:glass/colorless"
+    },
+    "s":
+    {
+      "tag": "forge:slimeballs"
+    },
+    "p": {
+      "item": "minecraft:wooden_pickaxe"
+    }
+  },
+  "result":
+  {
+    "item": "tiletools:tile_in_a_bottle"
+  }
+}

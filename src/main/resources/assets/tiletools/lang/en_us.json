@@ -1,0 +1,23 @@
+{
+  "itemGroup.tiletools": "Tile Tools",
+
+  "block.tiletools.accelerator": "Block Accelerator",
+  "block.tiletools.decelerator": "Block Decelerator",
+  "block.tiletools.growth_accelerator": "Growth Accelerator",
+
+  "item.tiletools.tile_in_a_bottle": "§bTile in a Bottle§r",
+
+  "message.tiletools.bottle_block": "Stored block: %s",
+  "message.tiletools.bottle_empty": "Empty",
+
+  "message.tiletools.tier_message": "Harvest tier: %s",
+  "message.tiletools.tier_wood": "Wood",
+  "message.tiletools.tier_stone": "Stone",
+  "message.tiletools.tier_iron": "Iron",
+  "message.tiletools.tier_diamond": "Diamond",
+  "message.tiletools.tier_netherite": "Netherite",
+
+  "message.tiletools.bottle_info1": "Picks up blocks (including machines!) for moving or just storing",
+  "message.tiletools.bottle_info2": "Craft with a pickaxe to upgrade the tier. Higher tiers can pick up more blocks and recharge faster",
+  "message.tiletools.empty": ""
+}

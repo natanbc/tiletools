@@ -1,0 +1,12 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "minecraft:item/potion"
+  },
+  "overrides": [
+    {
+      "predicate": { "tiletools:filled": 1 },
+      "model": "tiletools:item/tile_in_a_bottle_filled"
+    }
+  ]
+}
