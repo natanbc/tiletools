@@ -45,7 +45,7 @@ public class Config {
                               "- linear: additional ticks are linearly proportional to tps (factor *= (tps/20))",
                               "- exponential: additional ticks are proportional to 0.9^(20 - tps)",
                               "- aggressive: additional ticks are disabled if tps is lower than 19.5")
-                     .defineEnum("tps_helper", AcceleratorTpsHelper.DISABLED);
+                     .defineEnum("tps_helper", AcceleratorTpsHelper.LINEAR);
         }
         
         try(Section s = section(common, "decelerator")) {
