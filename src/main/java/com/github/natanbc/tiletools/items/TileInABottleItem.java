@@ -9,17 +9,15 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTier;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
-import net.minecraft.state.Property;
-import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.Color;
@@ -126,16 +124,10 @@ public class TileInABottleItem extends Item {
             }
             s.removeChildTag("stored_tile");
             BlockState state = NBTUtil.readBlockState(stored.getCompound("state"));
-            if(context.getPlayer() != null) {
-                //fix direction
-                Direction dir = Direction.getFacingDirections(context.getPlayer())[0];
-                state = with(state, BlockStateProperties.HORIZONTAL_FACING,
-                        context.getPlacementHorizontalFacing().getOpposite());
-                state = with(state, BlockStateProperties.FACING,
-                        dir.getOpposite());
-                if(dir != Direction.DOWN) {
-                    state = with(state, BlockStateProperties.FACING_EXCEPT_UP, dir.getOpposite());
-                }
+            BlockState placementState =
+                    state.getBlock().getStateForPlacement(new BlockItemUseContext(context));
+            if(placementState != null) {
+                state = placementState;
             }
             world.setBlockState(pos, state);
             if(stored.getBoolean("has_te")) {
@@ -187,12 +179,5 @@ public class TileInABottleItem extends Item {
         } else {
             return level;
         }
-    }
-    
-    private static <T extends Comparable<T>> BlockState with(BlockState state, Property<T> prop, T value) {
-        if(state.func_235901_b_(prop)) {
-            return state.with(prop, value);
-        }
-        return state;
     }
 }
