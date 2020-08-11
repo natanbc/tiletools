@@ -1,5 +1,6 @@
 package com.github.natanbc.tiletools;
 
+import com.github.natanbc.tiletools.init.CapabilityRegistration;
 import com.github.natanbc.tiletools.init.Registration;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -18,6 +19,7 @@ public class TileTools {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         bus.addListener((FMLCommonSetupEvent e) -> {
             logger().info("Starting!");
+            CapabilityRegistration.register();
         });
         
         Config.init();

@@ -5,6 +5,8 @@ import com.github.natanbc.tiletools.blocks.AcceleratorBlock;
 import com.github.natanbc.tiletools.blocks.AcceleratorTile;
 import com.github.natanbc.tiletools.blocks.DeceleratorBlock;
 import com.github.natanbc.tiletools.blocks.DeceleratorTile;
+import com.github.natanbc.tiletools.blocks.FreezerBlock;
+import com.github.natanbc.tiletools.blocks.FreezerTile;
 import com.github.natanbc.tiletools.blocks.GrowthAcceleratorBlock;
 import com.github.natanbc.tiletools.blocks.GrowthAcceleratorTile;
 import com.github.natanbc.tiletools.crafting.TileInABottleUpgradeRecipe;
@@ -58,6 +60,9 @@ public class Registration {
     
     public static final RegistryBlockWithTE<GrowthAcceleratorBlock, GrowthAcceleratorTile> GROWTH_ACCELERATOR
             = new RegistryBlockWithTE<>("growth_accelerator", GrowthAcceleratorBlock::new, GrowthAcceleratorTile::new);
+    
+    public static final RegistryBlockWithTE<FreezerBlock, FreezerTile> FREEZER
+            = new RegistryBlockWithTE<>("freezer", FreezerBlock::new, FreezerTile::new);
     
     public static final RegistryObject<IRecipeSerializer<?>> TILE_IN_A_BOTTLE_UPGRADE_RECIPE
             = RECIPES.register("crafting_special_bottle_upgrade", () -> TileInABottleUpgradeRecipe.SERIALIZER);

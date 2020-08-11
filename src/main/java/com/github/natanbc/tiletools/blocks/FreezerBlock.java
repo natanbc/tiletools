@@ -7,8 +7,8 @@ import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
 
-public class DeceleratorBlock extends BaseFreezerBlock {
-    public DeceleratorBlock() {
+public class FreezerBlock extends BaseFreezerBlock {
+    public FreezerBlock() {
         super(Block.Properties.create(Material.IRON)
                       .sound(SoundType.METAL)
                       .hardnessAndResistance(2.0f)
@@ -17,11 +17,11 @@ public class DeceleratorBlock extends BaseFreezerBlock {
     
     @Override
     protected Class<? extends BaseFreezerTile> tileEntityClass() {
-        return DeceleratorTile.class;
+        return FreezerTile.class;
     }
     
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new DeceleratorTile();
+        return new FreezerTile();
     }
 }
