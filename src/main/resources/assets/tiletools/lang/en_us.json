@@ -3,6 +3,7 @@
 
   "block.tiletools.accelerator": "Block Accelerator",
   "block.tiletools.decelerator": "Block Decelerator",
+  "block.tiletools.freezer": "Block Freezer",
   "block.tiletools.growth_accelerator": "Growth Accelerator",
 
   "item.tiletools.tile_in_a_bottle": "§bTile in a Bottle§r",

@@ -8,6 +8,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -20,13 +21,20 @@ public class Config {
     public static final ForgeConfigSpec.IntValue ACCELERATOR_FACTOR;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> ACCELERATOR_BLACKLIST;
     public static final ForgeConfigSpec.EnumValue<AcceleratorTpsHelper> ACCELERATOR_TPS_HELPER;
+    
     public static final ForgeConfigSpec.IntValue DECELERATOR_RADIUS;
     public static final ForgeConfigSpec.IntValue DECELERATOR_FACTOR;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> DECELERATOR_BLACKLIST;
+    
+    public static final ForgeConfigSpec.IntValue FREEZER_RADIUS;
+    public static final ForgeConfigSpec.ConfigValue<List<? extends String>> FREEZER_BLACKLIST;
+    
     public static final ForgeConfigSpec.IntValue GROWTH_FACTOR;
+    
     public static final ForgeConfigSpec.IntValue BOTTLE_RECHARGE_TIME;
     public static final ForgeConfigSpec.IntValue BOTTLE_RECHARGE_TIER_SCALE;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> BOTTLE_BLACKLIST;
+    
     public static final ForgeConfigSpec.BooleanValue LOG_CODEGEN_ABORTS;
     public static final ForgeConfigSpec.BooleanValue DUMP_CODEGEN;
     
@@ -77,6 +85,18 @@ public class Config {
                      .comment("List of tile entities that should not be decelerated")
                      .defineList("blacklist",
                             Collections.singletonList("tiletools:accelerator"), _1 -> true);
+        }
+        
+        try(Section s = section(common, "freezer")) {
+            FREEZER_RADIUS = common
+                    .comment("Radius used for finding blocks to freeze.",
+                            "The search happens on a cube, centered at the freezer",
+                            "from X - r, Y - r, Z - r to X + r, Y + r, Z + r.",
+                            "Setting to 0 disables the freezer")
+                    .defineInRange("radius", 2, 0, 3);
+            FREEZER_BLACKLIST = common
+                    .comment("List of tile entities that should not be frozen")
+                    .defineList("blacklist", Arrays.asList("tiletools:accelerator", "tiletools:freezer"), _1 -> true);
         }
         
         try(Section s = section(common, "growth_accelerator")) {
@@ -139,6 +159,10 @@ public class Config {
     
     public static boolean isDeceleratorBlacklisted(TileEntity te) {
         return isInList(DECELERATOR_BLACKLIST.get(), te);
+    }
+    
+    public static boolean isFreezerBlacklisted(TileEntity te) {
+        return isInList(FREEZER_BLACKLIST.get(), te);
     }
     
     public static boolean isBottleBlacklisted(BlockState state) {
