@@ -11,6 +11,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTier;
 import net.minecraft.item.ItemUseContext;
@@ -19,6 +20,7 @@ import net.minecraft.nbt.NBTUtil;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.Color;
 import net.minecraft.util.text.ITextComponent;
@@ -50,6 +52,16 @@ public class TileInABottleItem extends Item {
         ClientUtils.addPropertyOverride(
                 this, "tiletools:filled", stack -> stack.getChildTag("stored_tile") == null ? 0f : 1f
         );
+    }
+    
+    @Override
+    public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
+        if(isInGroup(group)) {
+            ItemStack stack = new ItemStack(this);
+            for(int i = 0; i < TIER_NAMES.length; i++) {
+                items.add(setHarvestLevel(stack, i));
+            }
+        }
     }
     
     @Override
