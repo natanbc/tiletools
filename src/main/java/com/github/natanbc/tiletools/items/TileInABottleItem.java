@@ -131,10 +131,8 @@ public class TileInABottleItem extends Item {
             if(state.getBlock() instanceof BedBlock) {
                 BedPart part = state.get(BedBlock.PART);
                 if(part == BedPart.FOOT) {
-                    TileTools.logger().info("Before: {}/{}", pos, state);
                     pos = pos.offset(state.get(BedBlock.HORIZONTAL_FACING));
                     state = world.getBlockState(pos);
-                    TileTools.logger().info("After: {}/{}", pos, state);
                 }
             }
             
