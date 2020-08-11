@@ -35,9 +35,6 @@ public class Config {
     public static final ForgeConfigSpec.IntValue BOTTLE_RECHARGE_TIER_SCALE;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> BOTTLE_BLACKLIST;
     
-    public static final ForgeConfigSpec.BooleanValue LOG_CODEGEN_ABORTS;
-    public static final ForgeConfigSpec.BooleanValue DUMP_CODEGEN;
-    
     static {
         ForgeConfigSpec.Builder client = new ForgeConfigSpec.Builder();
         ForgeConfigSpec.Builder common = new ForgeConfigSpec.Builder();
@@ -127,19 +124,6 @@ public class Config {
             BOTTLE_BLACKLIST = common
                     .comment("Blocks that cannot be picked up by the bottle")
                     .defineList("blacklist", Collections.emptyList(), _1 -> true);
-        }
-        
-        try(Section s = section(common, "debugging")) {
-            LOG_CODEGEN_ABORTS = common
-                     .comment("Log code generation aborts. These can be caused by,",
-                             "for example, a tile entity having an incompatible constructor.",
-                             "Failures are always logged, as those are actual mod errors, rather",
-                             "than an unsupported tile entity class shape.")
-                     .define("log_codegen_aborts", false);
-            DUMP_CODEGEN = common
-                     .comment("Dump generated code for tile entity deceleration.",
-                              "Only enable this to debug broken code being generated.")
-                     .define("dump_codegen", false);
         }
         
         CLIENT = client.build();
