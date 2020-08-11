@@ -1,11 +1,16 @@
 package com.github.natanbc.tiletools.items;
 
 import com.github.natanbc.tiletools.Config;
+import com.github.natanbc.tiletools.TileTools;
 import com.github.natanbc.tiletools.init.Registration;
 import com.github.natanbc.tiletools.util.ClientUtils;
 import com.github.natanbc.tiletools.util.TextUtils;
+import net.minecraft.block.BedBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.CakeBlock;
+import net.minecraft.block.JukeboxBlock;
+import net.minecraft.block.PistonHeadBlock;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -17,8 +22,12 @@ import net.minecraft.item.ItemTier;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
+import net.minecraft.state.properties.BedPart;
+import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.state.properties.DoubleBlockHalf;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -106,6 +115,29 @@ public class TileInABottleItem extends Item {
         if(stored == null) {
             BlockPos pos = context.getPos();
             BlockState state = world.getBlockState(pos);
+            
+            //properly pick up doors and tall flowers
+            if(state.hasProperty(BlockStateProperties.DOUBLE_BLOCK_HALF) &&
+                       state.get(BlockStateProperties.DOUBLE_BLOCK_HALF) == DoubleBlockHalf.UPPER) {
+                pos = pos.down();
+                state = world.getBlockState(pos);
+            }
+            //fix piston
+            if(state.getBlock() instanceof PistonHeadBlock) {
+                pos = pos.offset(state.get(PistonHeadBlock.FACING).getOpposite());
+                state = world.getBlockState(pos);
+            }
+            //fix bed
+            if(state.getBlock() instanceof BedBlock) {
+                BedPart part = state.get(BedBlock.PART);
+                if(part == BedPart.FOOT) {
+                    TileTools.logger().info("Before: {}/{}", pos, state);
+                    pos = pos.offset(state.get(BedBlock.HORIZONTAL_FACING));
+                    state = world.getBlockState(pos);
+                    TileTools.logger().info("After: {}/{}", pos, state);
+                }
+            }
+            
             //if the block is unbreakable, can't be harvested or the bottle
             //is still recharging, drop it
             if(state.getBlockHardness(world, pos) < 0 ||
@@ -130,18 +162,29 @@ public class TileInABottleItem extends Item {
             world.setBlockState(pos, Blocks.AIR.getDefaultState());
         } else {
             BlockPos pos = context.getPos().offset(context.getFace());
+            BlockState state = NBTUtil.readBlockState(stored.getCompound("state"));
             if(!world.getBlockState(pos).getMaterial().isReplaceable() ||
-                       World.isOutsideBuildHeight(pos)) {
+                       World.isOutsideBuildHeight(pos) ||
+                        !state.isValidPosition(world, pos)) {
                 return super.onItemUse(context);
             }
             s.removeChildTag("stored_tile");
-            BlockState state = NBTUtil.readBlockState(stored.getCompound("state"));
             BlockState placementState =
                     state.getBlock().getStateForPlacement(new BlockItemUseContext(context));
             if(placementState != null) {
+                //no free cake
+                if(state.hasProperty(CakeBlock.BITES)) {
+                    placementState = placementState.with(CakeBlock.BITES, state.get(CakeBlock.BITES));
+                }
+                //don't destroy records
+                if(state.hasProperty(JukeboxBlock.HAS_RECORD)) {
+                    placementState = placementState.with(JukeboxBlock.HAS_RECORD, state.get(JukeboxBlock.HAS_RECORD));
+                }
                 state = placementState;
             }
             world.setBlockState(pos, state);
+            //allow doors and tall flowers to set the other block
+            state.getBlock().onBlockPlacedBy(world, pos, state, context.getPlayer(), new ItemStack(state.getBlock()));
             if(stored.getBoolean("has_te")) {
                 TileEntity te = TileEntity.readTileEntity(state, stored.getCompound("te"));
                 world.setTileEntity(pos, te);
