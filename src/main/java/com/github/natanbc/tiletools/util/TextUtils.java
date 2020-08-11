@@ -8,10 +8,10 @@ import net.minecraft.util.text.TextFormatting;
 
 public class TextUtils {
     public static ITextComponent withFormatting(TextComponent component, TextFormatting formatting) {
-        return component.func_230530_a_(Style.field_240709_b_.func_240712_a_(formatting));
+        return component.mergeStyle(Style.EMPTY.applyFormatting(formatting));
     }
     
     public static ITextComponent withColor(TextComponent component, Color color) {
-        return component.func_230530_a_(Style.field_240709_b_.func_240718_a_(color));
+        return component.mergeStyle(Style.EMPTY.setColor(color));
     }
 }

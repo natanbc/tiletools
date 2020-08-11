@@ -24,7 +24,7 @@ public class ClientEvents {
             }
             int color = blocks.getColor(state, null, null, 0);
             if(color == -1) {
-                color = state.getBlock().func_235697_s_().colorValue;
+                color = state.getBlock().getMaterialColor().colorValue;
             }
             return color;
         }, Registration.TILE_IN_A_BOTTLE.get());

@@ -143,7 +143,7 @@ public class TileInABottleItem extends Item {
             }
             world.setBlockState(pos, state);
             if(stored.getBoolean("has_te")) {
-                TileEntity te = TileEntity.func_235657_b_(state, stored.getCompound("te"));
+                TileEntity te = TileEntity.readTileEntity(state, stored.getCompound("te"));
                 world.setTileEntity(pos, te);
             }
             if(context.getPlayer() == null || !context.getPlayer().isCreative()) {
