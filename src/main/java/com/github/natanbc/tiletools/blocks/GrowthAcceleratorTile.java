@@ -46,10 +46,13 @@ public class GrowthAcceleratorTile extends TileEntity implements ITickableTileEn
         
         BlockPos pos = this.pos.up(2);
         BlockState s = world.getBlockState(pos);
+        if(!s.ticksRandomly()) return;
         
         ServerWorld serverWorld = (ServerWorld)world;
         for(int i = 0; i < Config.GROWTH_FACTOR.get(); i++) {
             s.randomTick(serverWorld, pos, serverWorld.rand);
+            //if the block changed, stop forcing growth
+            if(serverWorld.getBlockState(pos) != s) break;
         }
     }
 }
