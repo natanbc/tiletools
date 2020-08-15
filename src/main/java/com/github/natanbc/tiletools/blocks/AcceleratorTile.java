@@ -6,11 +6,9 @@ import com.github.natanbc.tiletools.util.WorldUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.profiler.IProfiler;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 
@@ -53,7 +51,8 @@ public class AcceleratorTile extends TileEntity implements ITickableTileEntity {
         lastTick = world.getGameTime();
         
         int factor = Config.ACCELERATOR_FACTOR.get();
-        factor = Config.ACCELERATOR_TPS_HELPER.get().recomputeFactor(factor, tps(world));
+        factor = Config.ACCELERATOR_TPS_HELPER.get().recomputeFactor(
+                factor, WorldUtils.tps(world));
         
         IProfiler profiler = world.getProfiler();
         profiler.startSection("tiletools_accelerator");
@@ -74,23 +73,5 @@ public class AcceleratorTile extends TileEntity implements ITickableTileEntity {
         } finally {
             profiler.endSection();
         }
-    }
-    
-    private static double tps(World world) {
-        MinecraftServer server = world.getServer();
-        //if we can't compute, assume 20
-        if(server == null) {
-            return 20;
-        }
-        double meanTickTime = mean(server.tickTimeArray) * 1.0E-6D;
-        return Math.min(1000.0/meanTickTime, 20);
-    }
-    
-    private static long mean(long[] values) {
-        long sum = 0L;
-        for(long v : values) {
-            sum += v;
-        }
-        return sum / values.length;
     }
 }

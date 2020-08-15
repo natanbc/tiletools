@@ -7,6 +7,7 @@
   "block.tiletools.growth_accelerator": "Growth Accelerator",
 
   "item.tiletools.tile_in_a_bottle": "§bTile in a Bottle§r",
+  "item.tiletools.acceleration_wand": "§bAcceleration Wand§r",
 
   "message.tiletools.bottle_block": "Stored block: %s",
   "message.tiletools.bottle_empty": "Empty",
@@ -20,5 +21,6 @@
 
   "message.tiletools.bottle_info1": "Picks up blocks (including machines!) for moving or just storing",
   "message.tiletools.bottle_info2": "Craft with a pickaxe to upgrade the tier. Higher tiers can pick up more blocks and recharge faster",
-  "message.tiletools.empty": ""
+
+  "message.tiletools.wand_damage": "The wand zaps you"
 }

@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    " cn",
+    " sc",
+    "s  "
+  ],
+  "key":
+  {
+    "n":
+    {
+      "item": "minecraft:nether_star"
+    },
+    "s":
+    {
+      "item": "minecraft:stick"
+    },
+    "c":
+    {
+      "item": "minecraft:clock"
+    }
+  },
+  "result":
+  {
+    "item": "tiletools:acceleration_wand",
+    "nbt": {
+      "Damage": 4500,
+      "Enchantments": [
+        {"id": "minecraft:mending", "lvl": 1}
+      ]
+    }
+  }
+}

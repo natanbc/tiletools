@@ -35,6 +35,14 @@ public class Config {
     public static final ForgeConfigSpec.IntValue BOTTLE_RECHARGE_TIER_SCALE;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> BOTTLE_BLACKLIST;
     
+    public static final ForgeConfigSpec.IntValue WAND_TE_SPEEDUP;
+    public static final ForgeConfigSpec.IntValue WAND_TE_USES;
+    public static final ForgeConfigSpec.EnumValue<AcceleratorTpsHelper> WAND_TPS_HELPER;
+    public static final ForgeConfigSpec.IntValue WAND_CROP_SPEEDUP;
+    public static final ForgeConfigSpec.IntValue WAND_CROP_USES;
+    public static final ForgeConfigSpec.BooleanValue WAND_BAD_EFFECTS_ENABLED;
+    public static final ForgeConfigSpec.IntValue WAND_BAD_EFFECTS_DURATION;
+    
     static {
         ForgeConfigSpec.Builder client = new ForgeConfigSpec.Builder();
         ForgeConfigSpec.Builder common = new ForgeConfigSpec.Builder();
@@ -124,6 +132,43 @@ public class Config {
             BOTTLE_BLACKLIST = common
                     .comment("Blocks that cannot be picked up by the bottle")
                     .defineList("blacklist", Collections.emptyList(), _1 -> true);
+        }
+        
+        try(Section s = section(common, "acceleration_wand")) {
+            WAND_TE_SPEEDUP = common
+                    .comment("How much tile entities are sped up for each use,",
+                             "in ticks. Setting to 0 disables tile entity acceleration")
+                    .defineInRange("te_speedup", 1200, 0, 12000);
+            WAND_TE_USES = common
+                    .comment("How many times tile entities can be sped up by a wand",
+                             "with full durability. This is used for damage calculations",
+                             "and shared with crop uses.")
+                    .defineInRange("te_uses", 100, 1, 5000);
+            WAND_TPS_HELPER = common
+                    .comment("Determines how the wand slows down it's additional",
+                             "ticks when TPS is low. Valid methods are:",
+                             "- disabled: additional ticks are not affected by tps",
+                             "- linear: additional ticks are linearly proportional to tps (factor *= (tps/20))",
+                             "- exponential: additional ticks are proportional to 0.9^(20 - tps)",
+                             "- aggressive: additional ticks are disabled if tps is lower than 19.5")
+                    .defineEnum("tps_helper", AcceleratorTpsHelper.LINEAR);
+            WAND_CROP_SPEEDUP = common
+                    .comment("How much crops are sped up for each use,",
+                             "in random block ticks. Setting to 0 disables",
+                             "crop acceleration")
+                    .defineInRange("crop_speedup", 100, 0, 1000);
+            WAND_CROP_USES = common
+                    .comment("How many times crops can be sped up by a wand",
+                             "with full durability. This is used for damage calculations",
+                             "and shared with tile entity uses.")
+                    .defineInRange("te_uses", 500, 1, 5000);
+            WAND_BAD_EFFECTS_ENABLED = common
+                    .comment("Whether or not wands should apply bad effects if",
+                             "used with no durability left.")
+                    .define("bad_effects_enabled", true);
+            WAND_BAD_EFFECTS_DURATION = common
+                    .comment("How long the bad effects last, in ticks.")
+                    .defineInRange("bad_effects_duration", 100, 0, 1200);
         }
         
         CLIENT = client.build();
