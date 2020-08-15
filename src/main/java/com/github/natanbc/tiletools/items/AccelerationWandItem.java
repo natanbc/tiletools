@@ -95,8 +95,8 @@ public class AccelerationWandItem extends Item {
         int configSpeedup = Config.WAND_TE_SPEEDUP.get();
         int speedup = Config.WAND_TPS_HELPER.get().recomputeFactor(
                 configSpeedup, WorldUtils.tps(player.world));
-        int damage = (int)Math.ceil(
-                Config.WAND_TE_USES.get() * (speedup / (double) configSpeedup));
+        double scaledUsage = Config.WAND_TE_USES.get() * (speedup / (double) configSpeedup);
+        int damage = (int)Math.max(Math.ceil(DURABILITY / scaledUsage), 1);
         if(allowEffect(stack, player, damage)) {
             IProfiler profiler = player.world.getProfiler();
             profiler.startSection("tiletools_acceleration_wand");
@@ -113,7 +113,7 @@ public class AccelerationWandItem extends Item {
     private static void tickCrop(PlayerEntity player, ItemStack stack, ServerWorld world, BlockPos pos) {
         BlockState state = world.getBlockState(pos);
         int speedup = Config.WAND_CROP_SPEEDUP.get();
-        int damage = Config.WAND_CROP_SPEEDUP.get();
+        int damage = Math.max(DURABILITY / Config.WAND_CROP_USES.get(), 1);
         if(allowEffect(stack, player, damage)) {
             for(int i = 0; i < speedup; i++) {
                 state.randomTick(world, pos, world.rand);

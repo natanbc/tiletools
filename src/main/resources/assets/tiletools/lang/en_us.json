@@ -21,6 +21,8 @@
 
   "message.tiletools.bottle_info1": "Picks up blocks (including machines!) for moving or just storing",
   "message.tiletools.bottle_info2": "Craft with a pickaxe to upgrade the tier. Higher tiers can pick up more blocks and recharge faster",
+  "message.tiletools.wand_info1": "Speeds up crops and machines when shift right clicked, at the cost of some durability.",
+  "message.tiletools.wand_info2": "While this item never breaks, overusing it is bad for your health",
 
   "message.tiletools.wand_damage": "The wand zaps you"
 }

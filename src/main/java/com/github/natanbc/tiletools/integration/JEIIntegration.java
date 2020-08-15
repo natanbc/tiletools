@@ -26,5 +26,12 @@ public class JEIIntegration implements IModPlugin {
                 "message.tiletools.bottle_info1",
                 "message.tiletools.bottle_info2"
         );
+    
+        registration.addIngredientInfo(
+                new ItemStack(Registration.ACCELERATION_WAND.get()),
+                VanillaTypes.ITEM,
+                "message.tiletools.wand_info1",
+                "message.tiletools.wand_info2"
+        );
     }
 }

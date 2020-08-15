@@ -161,7 +161,7 @@ public class Config {
                     .comment("How many times crops can be sped up by a wand",
                              "with full durability. This is used for damage calculations",
                              "and shared with tile entity uses.")
-                    .defineInRange("te_uses", 500, 1, 5000);
+                    .defineInRange("crop_uses", 500, 1, 5000);
             WAND_BAD_EFFECTS_ENABLED = common
                     .comment("Whether or not wands should apply bad effects if",
                              "used with no durability left.")
