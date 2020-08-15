@@ -12,6 +12,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 public class AcceleratorTile extends TileEntity implements ITickableTileEntity {
     private boolean enabled;
     private long lastTick;
@@ -26,11 +28,12 @@ public class AcceleratorTile extends TileEntity implements ITickableTileEntity {
     }
     
     @Override
-    public void read(BlockState state, CompoundNBT compound) {
+    public void read(@Nonnull BlockState state, CompoundNBT compound) {
         enabled = compound.getBoolean("enabled");
         super.read(state, compound);
     }
     
+    @Nonnull
     @Override
     public CompoundNBT write(CompoundNBT compound) {
         compound.putBoolean("enabled", enabled);

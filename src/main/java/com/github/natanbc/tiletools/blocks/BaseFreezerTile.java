@@ -1,8 +1,6 @@
 package com.github.natanbc.tiletools.blocks;
 
 import com.github.natanbc.tiletools.FreezeHandler;
-import com.github.natanbc.tiletools.Config;
-import com.github.natanbc.tiletools.init.Registration;
 import com.github.natanbc.tiletools.util.FrozenTiles;
 import com.github.natanbc.tiletools.util.WorldUtils;
 import net.minecraft.block.BlockState;
@@ -13,6 +11,7 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.chunk.Chunk;
 
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,7 +23,9 @@ public abstract class BaseFreezerTile extends TileEntity implements ITickableTil
         super(type);
     }
     
+    @SuppressWarnings("unused")
     protected abstract boolean isBlacklisted(BlockPos pos, TileEntity te);
+    
     protected abstract int radius();
     
     public void setEnabled(boolean enabled) {
@@ -33,11 +34,12 @@ public abstract class BaseFreezerTile extends TileEntity implements ITickableTil
     }
     
     @Override
-    public void read(BlockState state, CompoundNBT compound) {
+    public void read(@Nonnull BlockState state, CompoundNBT compound) {
         enabled = compound.getBoolean("enabled");
         super.read(state, compound);
     }
     
+    @Nonnull
     @Override
     public CompoundNBT write(CompoundNBT compound) {
         compound.putBoolean("enabled", enabled);
@@ -94,6 +96,7 @@ public abstract class BaseFreezerTile extends TileEntity implements ITickableTil
     
     private void disable() {
         for(BlockPos p : WorldUtils.positionsAround(pos, radius())) {
+            //noinspection ConstantConditions
             TileEntity te = world.getTileEntity(p);
             Chunk chunk = world.getChunkAt(p);
             FrozenTiles cap = FrozenTiles.get(chunk);

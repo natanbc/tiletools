@@ -1,7 +1,6 @@
 package com.github.natanbc.tiletools.items;
 
 import com.github.natanbc.tiletools.Config;
-import com.github.natanbc.tiletools.TileTools;
 import com.github.natanbc.tiletools.init.Registration;
 import com.github.natanbc.tiletools.util.ClientUtils;
 import com.github.natanbc.tiletools.util.TextUtils;
@@ -27,7 +26,6 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.state.properties.DoubleBlockHalf;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -40,6 +38,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
@@ -64,7 +63,7 @@ public class TileInABottleItem extends Item {
     }
     
     @Override
-    public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
+    public void fillItemGroup(@Nonnull ItemGroup group, @Nonnull NonNullList<ItemStack> items) {
         if(isInGroup(group)) {
             ItemStack stack = new ItemStack(this);
             for(int i = 0; i < TIER_NAMES.length; i++) {
@@ -79,7 +78,7 @@ public class TileInABottleItem extends Item {
     }
     
     @Override
-    public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+    public void inventoryTick(ItemStack stack, @Nonnull World worldIn, @Nonnull Entity entityIn, int itemSlot, boolean isSelected) {
         if(stack.getDamage() > 0 && worldIn.getGameTime() % 10 == 0) {
             int tier = getHarvestLevel(stack);
             int recharge = (tier + 1) * Config.BOTTLE_RECHARGE_TIER_SCALE.get();
@@ -89,8 +88,8 @@ public class TileInABottleItem extends Item {
     
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip,
-                               ITooltipFlag flagIn) {
+    public void addInformation(@Nonnull ItemStack stack, World worldIn, List<ITextComponent> tooltip,
+                               @Nonnull ITooltipFlag flagIn) {
         tooltip.add(new StringTextComponent(""));
         tooltip.add(new TranslationTextComponent("message.tiletools.tier_message", tierMessage(stack)));
         CompoundNBT stored = stack.getChildTag("stored_tile");
@@ -106,6 +105,7 @@ public class TileInABottleItem extends Item {
         super.addInformation(stack, worldIn, tooltip, flagIn);
     }
     
+    @Nonnull
     @Override
     public ActionResultType onItemUse(ItemUseContext context) {
         if(context.getHand() != Hand.MAIN_HAND) return super.onItemUse(context);
@@ -195,7 +195,7 @@ public class TileInABottleItem extends Item {
     }
     
     @Override
-    public boolean isEnchantable(ItemStack stack) {
+    public boolean isEnchantable(@Nonnull ItemStack stack) {
         return false;
     }
     

@@ -8,6 +8,8 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 
+import javax.annotation.Nonnull;
+
 public class DeceleratorTile extends BaseFreezerTile {
     private int tick;
     
@@ -32,11 +34,12 @@ public class DeceleratorTile extends BaseFreezerTile {
     }
     
     @Override
-    public void read(BlockState state, CompoundNBT compound) {
+    public void read(@Nonnull BlockState state, CompoundNBT compound) {
         tick = compound.getInt("tick");
         super.read(state, compound);
     }
     
+    @Nonnull
     @Override
     public CompoundNBT write(CompoundNBT compound) {
         compound.putInt("tick", tick);

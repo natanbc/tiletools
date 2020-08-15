@@ -8,8 +8,11 @@ import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
+import javax.annotation.Nonnull;
+
 @JeiPlugin
 public class JEIIntegration implements IModPlugin {
+    @Nonnull
     @Override
     public ResourceLocation getPluginUid() {
         return new ResourceLocation("tiletools");

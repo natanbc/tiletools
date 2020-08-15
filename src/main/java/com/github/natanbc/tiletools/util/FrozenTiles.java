@@ -14,6 +14,7 @@ import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -30,6 +31,7 @@ import java.util.Objects;
  * entities.
  */
 public class FrozenTiles implements Iterable<BlockPos> {
+    @SuppressWarnings("CanBeFinal")
     @CapabilityInject(FrozenTiles.class)
     public static Capability<FrozenTiles> CAPABILITY = null;
     
@@ -93,6 +95,7 @@ public class FrozenTiles implements Iterable<BlockPos> {
         positions.remove(target);
     }
     
+    @Nonnull
     @Override
     public Iterator<BlockPos> iterator() {
         return positions.keySet().iterator();
@@ -143,8 +146,9 @@ public class FrozenTiles implements Iterable<BlockPos> {
             optional.invalidate();
         }
         
+        @Nonnull
         @Override
-        public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+        public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
             return optional.cast();
         }
     

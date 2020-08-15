@@ -10,6 +10,8 @@ import net.minecraft.item.crafting.SpecialRecipeSerializer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 public class TileInABottleUpgradeRecipe extends SpecialRecipe {
     public static final SpecialRecipeSerializer<TileInABottleUpgradeRecipe> SERIALIZER
             = new SpecialRecipeSerializer<>(TileInABottleUpgradeRecipe::new);
@@ -19,7 +21,7 @@ public class TileInABottleUpgradeRecipe extends SpecialRecipe {
     }
     
     @Override
-    public boolean matches(CraftingInventory inv, World worldIn) {
+    public boolean matches(CraftingInventory inv, @Nonnull World worldIn) {
         boolean foundBottle = false;
         boolean foundPick = false;
         for(int i = 0; i < inv.getSizeInventory(); ++i) {
@@ -39,6 +41,7 @@ public class TileInABottleUpgradeRecipe extends SpecialRecipe {
         return foundBottle & foundPick;
     }
     
+    @Nonnull
     @Override
     public ItemStack getCraftingResult(CraftingInventory inv) {
         ItemStack bottle = ItemStack.EMPTY;
@@ -72,6 +75,7 @@ public class TileInABottleUpgradeRecipe extends SpecialRecipe {
         return width * height >= 2;
     }
     
+    @Nonnull
     @Override
     public IRecipeSerializer<?> getSerializer() {
         return SERIALIZER;

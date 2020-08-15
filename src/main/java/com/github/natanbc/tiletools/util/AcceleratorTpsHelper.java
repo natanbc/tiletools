@@ -2,6 +2,7 @@ package com.github.natanbc.tiletools.util;
 
 import java.util.function.BiFunction;
 
+@SuppressWarnings("unused")
 public enum AcceleratorTpsHelper {
     DISABLED((factor, tps) -> factor),
     LINEAR((factor, tps) -> (int)Math.round(factor * (tps / 20))),
