@@ -24,7 +24,6 @@ public class JEIIntegration implements IModPlugin {
                 new ItemStack(Registration.TILE_IN_A_BOTTLE.get()),
                 VanillaTypes.ITEM,
                 "message.tiletools.bottle_info1",
-                "message.tiletools.empty",
                 "message.tiletools.bottle_info2"
         );
     }
