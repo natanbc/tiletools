@@ -206,7 +206,10 @@ public class TileInABottleItem extends Item {
                 world.setTileEntity(pos, te);
             }
             if(context.getPlayer() == null || !context.getPlayer().isCreative()) {
-                s.setDamage(s.getMaxDamage());
+                if(getHarvestLevel(s) < ItemTier.NETHERITE.getHarvestLevel() ||
+                      EnchantmentHelper.getEnchantmentLevel(Enchantments.EFFICIENCY, s) < 5) {
+                    s.setDamage(s.getMaxDamage());
+                }
             }
         }
         return ActionResultType.SUCCESS;
