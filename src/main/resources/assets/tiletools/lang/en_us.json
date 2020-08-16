@@ -24,5 +24,11 @@
   "message.tiletools.wand_info1": "Speeds up crops and machines when shift right clicked, at the cost of some durability.",
   "message.tiletools.wand_info2": "While this item never breaks, overusing it is bad for your health",
 
+  "message.tiletools.accelerator_info": "Speeds up machines around it",
+  "message.tiletools.growth_accelerator_info": "Speeds up the growth of crops planted on the block above it",
+  "message.tiletools.decelerator_info": "Slows down machines around it",
+  "message.tiletools.freezer_info": "Stops machines around it",
+
+
   "message.tiletools.wand_damage": "The wand zaps you"
 }

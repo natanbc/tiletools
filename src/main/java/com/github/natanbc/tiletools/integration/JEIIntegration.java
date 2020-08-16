@@ -33,5 +33,29 @@ public class JEIIntegration implements IModPlugin {
                 "message.tiletools.wand_info1",
                 "message.tiletools.wand_info2"
         );
+    
+        registration.addIngredientInfo(
+                new ItemStack(Registration.ACCELERATOR.item()),
+                VanillaTypes.ITEM,
+                "message.tiletools.accelerator_info"
+        );
+    
+        registration.addIngredientInfo(
+                new ItemStack(Registration.GROWTH_ACCELERATOR.item()),
+                VanillaTypes.ITEM,
+                "message.tiletools.growth_accelerator_info"
+        );
+    
+        registration.addIngredientInfo(
+                new ItemStack(Registration.DECELERATOR.item()),
+                VanillaTypes.ITEM,
+                "message.tiletools.decelerator_info"
+        );
+    
+        registration.addIngredientInfo(
+                new ItemStack(Registration.FREEZER.item()),
+                VanillaTypes.ITEM,
+                "message.tiletools.freezer_info"
+        );
     }
 }

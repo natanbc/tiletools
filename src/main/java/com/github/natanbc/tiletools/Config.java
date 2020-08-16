@@ -37,9 +37,11 @@ public class Config {
     
     public static final ForgeConfigSpec.IntValue WAND_TE_SPEEDUP;
     public static final ForgeConfigSpec.IntValue WAND_TE_USES;
+    public static final ForgeConfigSpec.ConfigValue<List<? extends String>> WAND_TE_BLACKLIST;
     public static final ForgeConfigSpec.EnumValue<AcceleratorTpsHelper> WAND_TPS_HELPER;
     public static final ForgeConfigSpec.IntValue WAND_CROP_SPEEDUP;
     public static final ForgeConfigSpec.IntValue WAND_CROP_USES;
+    public static final ForgeConfigSpec.ConfigValue<List<? extends String>> WAND_CROP_BLACKLIST;
     public static final ForgeConfigSpec.BooleanValue WAND_BAD_EFFECTS_ENABLED;
     public static final ForgeConfigSpec.IntValue WAND_BAD_EFFECTS_DURATION;
     
@@ -144,6 +146,10 @@ public class Config {
                              "with full durability. This is used for damage calculations",
                              "and shared with crop uses.")
                     .defineInRange("te_uses", 100, 1, 5000);
+            WAND_TE_BLACKLIST = common
+                    .comment("List of tile entities that should not be accelerated")
+                    .defineList("te_blacklist",
+                            Collections.singletonList("tiletools:decelerator"), _1 -> true);
             WAND_TPS_HELPER = common
                     .comment("Determines how the wand slows down it's additional",
                              "ticks when TPS is low. Valid methods are:",
@@ -162,6 +168,10 @@ public class Config {
                              "with full durability. This is used for damage calculations",
                              "and shared with tile entity uses.")
                     .defineInRange("crop_uses", 500, 1, 5000);
+            WAND_CROP_BLACKLIST = common
+                    .comment("List of crops that should not be accelerated")
+                    .defineList("crop_blacklist",
+                            Collections.emptyList(), _1 -> true);
             WAND_BAD_EFFECTS_ENABLED = common
                     .comment("Whether or not wands should apply bad effects if",
                              "used with no durability left.")
@@ -192,6 +202,15 @@ public class Config {
     
     public static boolean isFreezerBlacklisted(TileEntity te) {
         return isInList(FREEZER_BLACKLIST.get(), te);
+    }
+    
+    public static boolean isTEWandBlacklisted(TileEntity te) {
+        return isInList(WAND_TE_BLACKLIST.get(), te);
+    }
+    
+    public static boolean isCropWandBlacklisted(BlockState state) {
+        ResourceLocation res = state.getBlock().getRegistryName();
+        return res != null && WAND_CROP_BLACKLIST.get().contains(res.toString());
     }
     
     public static boolean isBottleBlacklisted(BlockState state) {

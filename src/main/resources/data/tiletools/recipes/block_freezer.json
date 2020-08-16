@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "iii",
+    "ici",
+    "iii"
+  ],
+  "key":
+  {
+    "i": {
+      "item": "minecraft:blue_ice"
+    },
+    "c": {
+      "item": "minecraft:clock"
+    }
+  },
+  "result":
+  {
+    "item": "tiletools:freezer"
+  }
+}

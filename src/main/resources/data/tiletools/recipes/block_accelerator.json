@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "rrr",
+    "cbc",
+    "rrr"
+  ],
+  "key":
+  {
+    "r": {
+      "item": "minecraft:redstone_block"
+    },
+    "c": {
+      "item": "minecraft:clock"
+    },
+    "b": {
+      "item": "minecraft:beacon"
+    }
+  },
+  "result":
+  {
+    "item": "tiletools:accelerator"
+  }
+}

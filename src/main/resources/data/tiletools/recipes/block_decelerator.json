@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "rrr",
+    "rfr",
+    "rrr"
+  ],
+  "key":
+  {
+    "r": {
+      "item": "minecraft:redstone"
+    },
+    "f": {
+      "item": "tiletools:freezer"
+    }
+  },
+  "result":
+  {
+    "item": "tiletools:decelerator"
+  }
+}

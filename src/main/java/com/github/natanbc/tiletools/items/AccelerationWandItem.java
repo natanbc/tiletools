@@ -11,6 +11,7 @@ import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.potion.EffectInstance;
@@ -20,6 +21,7 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -27,6 +29,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nonnull;
+import java.util.HashMap;
 import java.util.Map;
 
 public class AccelerationWandItem extends Item {
@@ -40,6 +43,17 @@ public class AccelerationWandItem extends Item {
                       .setNoRepair()
                       .group(Registration.ITEM_GROUP)
         );
+    }
+    
+    @Override
+    public void fillItemGroup(@Nonnull ItemGroup group, @Nonnull NonNullList<ItemStack> items) {
+        if(isInGroup(group)) {
+            ItemStack stack = new ItemStack(this);
+            Map<Enchantment, Integer> map = new HashMap<>();
+            map.put(Enchantments.MENDING, 1);
+            EnchantmentHelper.setEnchantments(map, stack);
+            items.add(stack);
+        }
     }
     
     @Override
@@ -78,20 +92,21 @@ public class AccelerationWandItem extends Item {
         TileEntity te = world.getTileEntity(pos);
         if(te instanceof ITickableTileEntity) {
             stack.setAnimationsToGo(5);
-            tickTileEntity(player, stack, (ITickableTileEntity)te);
-            return ActionResultType.SUCCESS;
+            return tickTileEntity(player, stack, (ITickableTileEntity)te);
         } else {
             BlockState state = world.getBlockState(pos);
             if(state.ticksRandomly() && world instanceof ServerWorld) {
                 stack.setAnimationsToGo(5);
-                tickCrop(player, stack, (ServerWorld)world, pos);
-                return ActionResultType.SUCCESS;
+                return tickCrop(player, stack, (ServerWorld)world, pos);
             }
         }
         return ActionResultType.PASS;
     }
     
-    private static void tickTileEntity(PlayerEntity player, ItemStack stack, ITickableTileEntity te) {
+    private static ActionResultType tickTileEntity(PlayerEntity player, ItemStack stack, ITickableTileEntity te) {
+        if(Config.isTEWandBlacklisted((TileEntity)te)) {
+            return ActionResultType.FAIL;
+        }
         int configSpeedup = Config.WAND_TE_SPEEDUP.get();
         int speedup = Config.WAND_TPS_HELPER.get().recomputeFactor(
                 configSpeedup, WorldUtils.tps(player.world));
@@ -108,10 +123,14 @@ public class AccelerationWandItem extends Item {
                 profiler.endSection();
             }
         }
+        return ActionResultType.SUCCESS;
     }
     
-    private static void tickCrop(PlayerEntity player, ItemStack stack, ServerWorld world, BlockPos pos) {
+    private static ActionResultType tickCrop(PlayerEntity player, ItemStack stack, ServerWorld world, BlockPos pos) {
         BlockState state = world.getBlockState(pos);
+        if(Config.isCropWandBlacklisted(state)) {
+            return ActionResultType.FAIL;
+        }
         int speedup = Config.WAND_CROP_SPEEDUP.get();
         int damage = Math.max(DURABILITY / Config.WAND_CROP_USES.get(), 1);
         if(allowEffect(stack, player, damage)) {
@@ -121,6 +140,7 @@ public class AccelerationWandItem extends Item {
                 if(!state.ticksRandomly()) break;
             }
         }
+        return ActionResultType.SUCCESS;
     }
     
     private static boolean allowEffect(ItemStack stack, PlayerEntity player, int damage) {

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "www",
+    "waw",
+    "www"
+  ],
+  "key":
+  {
+    "w": {
+      "item": "minecraft:wheat"
+    },
+    "a": {
+      "item": "tiletools:accelerator"
+    }
+  },
+  "result":
+  {
+    "item": "tiletools:growth_accelerator",
+    "count": 8
+  }
+}
