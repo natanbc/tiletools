@@ -27,6 +27,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.util.FakePlayer;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -82,6 +83,9 @@ public class AccelerationWandItem extends Item {
     public ActionResultType onItemUse(ItemUseContext context) {
         if(context.getWorld().isRemote) return super.onItemUse(context);
         PlayerEntity player = context.getPlayer();
+        if(player instanceof FakePlayer) {
+            return ActionResultType.FAIL;
+        }
         if(player != null && player.isSneaking()) {
             return doUse(player, context.getItem(), context.getWorld(), context.getPos());
         }
