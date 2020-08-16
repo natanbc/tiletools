@@ -1,13 +1,13 @@
 modLoader="javafml"
 loaderVersion="[32,)"
 license="Apache License 2.0"
-issueTrackerURL="https://github.com/natanbc/tiletools"
+issueTrackerURL="https://github.com/natanbc/tiletools/issues"
 [[mods]]
 modId="tiletools"
 version="${file.jarVersion}"
 displayName="Tile Tools"
 #updateJSONURL="http://myurl.me/" # todo
-#displayURL="http://example.com/" # todo
+displayURL="https://github.com/natanbc/tiletools"
 #logoFile="examplemod.png"        # todo
 #credits="Thanks for this example mod goes to Java" 
 authors="natanbc"
