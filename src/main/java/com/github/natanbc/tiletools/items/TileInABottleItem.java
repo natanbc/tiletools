@@ -93,6 +93,11 @@ public class TileInABottleItem extends Item {
     }
     
     @Override
+    public boolean hasEffect(@Nonnull ItemStack stack) {
+        return false;
+    }
+    
+    @Override
     public void inventoryTick(@Nonnull ItemStack stack, @Nonnull World worldIn, @Nonnull Entity entityIn, int itemSlot, boolean isSelected) {
         if(worldIn.isRemote) return;
         if(stack.getDamage() > 0 && worldIn.getGameTime() % 10 == 0) {
