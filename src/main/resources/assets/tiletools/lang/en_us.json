@@ -30,6 +30,8 @@
   "message.tiletools.freezer_info": "Stops machines around it",
   "message.tiletools.redstone_disable": "A redstone signal disables this block",
 
+  "message.tiletools.protect_te_info": "Tools with this enchantment won't break machines unless you're sneaking",
+
 
   "message.tiletools.wand_damage": "The wand zaps you"
 }

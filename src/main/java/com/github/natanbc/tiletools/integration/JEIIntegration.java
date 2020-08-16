@@ -5,10 +5,15 @@ import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.registration.IRecipeRegistration;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
+import java.util.HashMap;
+import java.util.Map;
 
 @JeiPlugin
 public class JEIIntegration implements IModPlugin {
@@ -60,6 +65,16 @@ public class JEIIntegration implements IModPlugin {
                 VanillaTypes.ITEM,
                 "message.tiletools.freezer_info",
                 "message.tiletools.redstone_disable"
+        );
+        
+        ItemStack protectTeBook = new ItemStack(Items.ENCHANTED_BOOK);
+        Map<Enchantment, Integer> protectTe = new HashMap<>();
+        protectTe.put(Registration.PROTECT_TE_ENCHANTMENT.get(), 1);
+        EnchantmentHelper.setEnchantments(protectTe, protectTeBook);
+        registration.addIngredientInfo(
+                protectTeBook,
+                VanillaTypes.ITEM,
+                "message.tiletools.protect_te_info"
         );
     }
 }

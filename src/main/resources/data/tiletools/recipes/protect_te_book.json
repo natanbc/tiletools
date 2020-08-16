@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "www",
+    "wbw",
+    "www"
+  ],
+  "key":
+  {
+    "b":
+    {
+      "item": "minecraft:book"
+    },
+    "w":
+    {
+      "tag": "minecraft:wool"
+    }
+  },
+  "result":
+  {
+    "item": "minecraft:enchanted_book",
+    "nbt": {
+      "StoredEnchantments": [
+        {"id": "tiletools:protect_te", "lvl": 1}
+      ]
+    }
+  }
+}

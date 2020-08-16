@@ -10,9 +10,11 @@ import com.github.natanbc.tiletools.blocks.FreezerTile;
 import com.github.natanbc.tiletools.blocks.GrowthAcceleratorBlock;
 import com.github.natanbc.tiletools.blocks.GrowthAcceleratorTile;
 import com.github.natanbc.tiletools.crafting.TileInABottleUpgradeRecipe;
+import com.github.natanbc.tiletools.enchantment.ProtectTEEnchantment;
 import com.github.natanbc.tiletools.items.TileInABottleItem;
 import com.github.natanbc.tiletools.items.AccelerationWandItem;
 import net.minecraft.block.Block;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -32,6 +34,7 @@ import static com.github.natanbc.tiletools.TileTools.MOD_ID;
 public class Registration {
     private static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MOD_ID);
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID);
+    private static final DeferredRegister<Enchantment> ENCHANTMENTS = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, MOD_ID);
     private static final DeferredRegister<TileEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, MOD_ID);
     private static final DeferredRegister<IRecipeSerializer<?>> RECIPES = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, MOD_ID);
     
@@ -39,6 +42,7 @@ public class Registration {
         TileTools.logger().info("Registering things!");
         BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        ENCHANTMENTS.register(FMLJavaModLoadingContext.get().getModEventBus());
         TILES.register(FMLJavaModLoadingContext.get().getModEventBus());
         RECIPES.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
@@ -55,6 +59,9 @@ public class Registration {
     
     public static final RegistryObject<AccelerationWandItem> ACCELERATION_WAND =
             ITEMS.register("acceleration_wand", AccelerationWandItem::new);
+    
+    public static final RegistryObject<ProtectTEEnchantment> PROTECT_TE_ENCHANTMENT
+            = ENCHANTMENTS.register("protect_te", ProtectTEEnchantment::new);
     
     public static final RegistryBlockWithTE<AcceleratorBlock, AcceleratorTile> ACCELERATOR
             = new RegistryBlockWithTE<>("accelerator", AcceleratorBlock::new, AcceleratorTile::new);
