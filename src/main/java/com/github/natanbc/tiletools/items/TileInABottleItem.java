@@ -12,6 +12,9 @@ import net.minecraft.block.JukeboxBlock;
 import net.minecraft.block.PistonHeadBlock;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.Item;
@@ -41,6 +44,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Map;
 
 public class TileInABottleItem extends Item {
     private static final String[] TIER_NAMES = { "wood", "stone", "iron", "diamond", "netherite" };
@@ -73,15 +77,29 @@ public class TileInABottleItem extends Item {
     }
     
     @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+        return enchantment == Enchantments.EFFICIENCY;
+    }
+    
+    @Override
+    public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
+        Map<Enchantment, Integer> map = EnchantmentHelper.getEnchantments(book);
+        return map.size() == 1 && map.containsKey(Enchantments.EFFICIENCY);
+    }
+    
+    @Override
     public int getMaxDamage(ItemStack stack) {
         return Config.BOTTLE_RECHARGE_TIME.get();
     }
     
     @Override
-    public void inventoryTick(ItemStack stack, @Nonnull World worldIn, @Nonnull Entity entityIn, int itemSlot, boolean isSelected) {
+    public void inventoryTick(@Nonnull ItemStack stack, @Nonnull World worldIn, @Nonnull Entity entityIn, int itemSlot, boolean isSelected) {
+        if(worldIn.isRemote) return;
         if(stack.getDamage() > 0 && worldIn.getGameTime() % 10 == 0) {
             int tier = getHarvestLevel(stack);
             int recharge = (tier + 1) * Config.BOTTLE_RECHARGE_TIER_SCALE.get();
+            int efficiency = EnchantmentHelper.getEnchantmentLevel(Enchantments.EFFICIENCY, stack);
+            recharge += ((tier + 1) * efficiency) * Config.BOTTLE_RECHARGE_TIER_SCALE.get();
             stack.setDamage(Math.max(0, stack.getDamage() - recharge));
         }
     }
