@@ -28,6 +28,7 @@
   "message.tiletools.growth_accelerator_info": "Speeds up the growth of crops planted on the block above it",
   "message.tiletools.decelerator_info": "Slows down machines around it",
   "message.tiletools.freezer_info": "Stops machines around it",
+  "message.tiletools.redstone_disable": "A redstone signal disables this block",
 
 
   "message.tiletools.wand_damage": "The wand zaps you"

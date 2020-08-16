@@ -37,25 +37,29 @@ public class JEIIntegration implements IModPlugin {
         registration.addIngredientInfo(
                 new ItemStack(Registration.ACCELERATOR.item()),
                 VanillaTypes.ITEM,
-                "message.tiletools.accelerator_info"
+                "message.tiletools.accelerator_info",
+                "message.tiletools.redstone_disable"
         );
     
         registration.addIngredientInfo(
                 new ItemStack(Registration.GROWTH_ACCELERATOR.item()),
                 VanillaTypes.ITEM,
-                "message.tiletools.growth_accelerator_info"
+                "message.tiletools.growth_accelerator_info",
+                "message.tiletools.redstone_disable"
         );
     
         registration.addIngredientInfo(
                 new ItemStack(Registration.DECELERATOR.item()),
                 VanillaTypes.ITEM,
-                "message.tiletools.decelerator_info"
+                "message.tiletools.decelerator_info",
+                "message.tiletools.redstone_disable"
         );
     
         registration.addIngredientInfo(
                 new ItemStack(Registration.FREEZER.item()),
                 VanillaTypes.ITEM,
-                "message.tiletools.freezer_info"
+                "message.tiletools.freezer_info",
+                "message.tiletools.redstone_disable"
         );
     }
 }
