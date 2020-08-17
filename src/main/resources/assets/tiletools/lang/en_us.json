@@ -8,6 +8,7 @@
 
   "item.tiletools.tile_in_a_bottle": "§bTile in a Bottle§r",
   "item.tiletools.acceleration_wand": "§bAcceleration Wand§r",
+  "item.tiletools.temporary_melter": "Temporary Melter",
 
   "message.tiletools.bottle_block": "Stored block: %s",
   "message.tiletools.bottle_empty": "Empty",
@@ -19,18 +20,20 @@
   "message.tiletools.tier_diamond": "Diamond",
   "message.tiletools.tier_netherite": "Netherite",
 
-  "message.tiletools.bottle_info1": "Picks up blocks (including machines!) for moving or just storing",
-  "message.tiletools.bottle_info2": "Craft with a pickaxe to upgrade the tier. Higher tiers can pick up more blocks and recharge faster",
+  "message.tiletools.bottle_info1": "Picks up blocks (including machines!) for moving or just storing.",
+  "message.tiletools.bottle_info2": "Craft with a pickaxe to upgrade the tier. Higher tiers can pick up more blocks and recharge faster.",
   "message.tiletools.wand_info1": "Speeds up crops and machines when shift right clicked, at the cost of some durability.",
-  "message.tiletools.wand_info2": "While this item never breaks, overusing it is bad for your health",
+  "message.tiletools.wand_info2": "While this item never breaks, overusing it is bad for your health.",
+  "message.tiletools.melter_info1": "Temporarily melts a frozen machine.",
+  "message.tiletools.melter_info2": "It's still not as fast as properly unfreezing it.",
 
-  "message.tiletools.accelerator_info": "Speeds up machines around it",
-  "message.tiletools.growth_accelerator_info": "Speeds up the growth of crops planted on the block above it",
-  "message.tiletools.decelerator_info": "Slows down machines around it",
-  "message.tiletools.freezer_info": "Stops machines around it",
-  "message.tiletools.redstone_disable": "A redstone signal disables this block",
+  "message.tiletools.accelerator_info": "Speeds up machines around it.",
+  "message.tiletools.growth_accelerator_info": "Speeds up the growth of crops planted on the block above it.",
+  "message.tiletools.decelerator_info": "Slows down machines around it.",
+  "message.tiletools.freezer_info": "Stops machines around it.",
+  "message.tiletools.redstone_disable": "A redstone signal disables this block.",
 
-  "message.tiletools.protect_te_info": "Tools with this enchantment won't break machines unless you're sneaking",
+  "message.tiletools.protect_te_info": "Tools with this enchantment won't break machines unless you're sneaking.",
 
 
   "message.tiletools.wand_damage": "The wand zaps you"

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    " b",
+    "s "
+  ],
+  "key":
+  {
+    "b":
+    {
+      "item": "minecraft:blaze_powder"
+    },
+    "s":
+    {
+      "item": "minecraft:stick"
+    }
+  },
+  "result":
+  {
+    "item": "tiletools:temporary_melter"
+  }
+}

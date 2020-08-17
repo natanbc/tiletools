@@ -15,6 +15,7 @@ import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -37,6 +38,19 @@ public class FrozenTiles implements Iterable<BlockPos> {
     
     //frozen tile -> freezer tile
     private final Map<BlockPos, BlockPos> positions = new HashMap<>();
+    
+    /**
+     * Returns the position of the tile entity responsible for freezing
+     * a given position.
+     *
+     * @param target Position to get.
+     *
+     * @return The freezer position, if it exists.
+     */
+    @Nullable
+    public BlockPos getFreezer(BlockPos target) {
+        return positions.get(target);
+    }
     
     /**
      * Returns whether or not a given position is frozen.

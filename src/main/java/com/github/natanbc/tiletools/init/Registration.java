@@ -11,6 +11,7 @@ import com.github.natanbc.tiletools.blocks.GrowthAcceleratorBlock;
 import com.github.natanbc.tiletools.blocks.GrowthAcceleratorTile;
 import com.github.natanbc.tiletools.crafting.TileInABottleUpgradeRecipe;
 import com.github.natanbc.tiletools.enchantment.ProtectTEEnchantment;
+import com.github.natanbc.tiletools.items.TemporaryMelterItem;
 import com.github.natanbc.tiletools.items.TileInABottleItem;
 import com.github.natanbc.tiletools.items.AccelerationWandItem;
 import net.minecraft.block.Block;
@@ -59,6 +60,9 @@ public class Registration {
     
     public static final RegistryObject<AccelerationWandItem> ACCELERATION_WAND =
             ITEMS.register("acceleration_wand", AccelerationWandItem::new);
+    
+    public static final RegistryObject<TemporaryMelterItem> TEMPORARY_MELTER =
+            ITEMS.register("temporary_melter", TemporaryMelterItem::new);
     
     public static final RegistryObject<ProtectTEEnchantment> PROTECT_TE_ENCHANTMENT
             = ENCHANTMENTS.register("protect_te", ProtectTEEnchantment::new);

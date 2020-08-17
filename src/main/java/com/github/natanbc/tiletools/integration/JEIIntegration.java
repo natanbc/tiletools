@@ -76,5 +76,12 @@ public class JEIIntegration implements IModPlugin {
                 VanillaTypes.ITEM,
                 "message.tiletools.protect_te_info"
         );
+        
+        registration.addIngredientInfo(
+                new ItemStack(Registration.TEMPORARY_MELTER.get()),
+                VanillaTypes.ITEM,
+                "message.tiletools.melter_info1",
+                "message.tiletools.melter_info2"
+        );
     }
 }
