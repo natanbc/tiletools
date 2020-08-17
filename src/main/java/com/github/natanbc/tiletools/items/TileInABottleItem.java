@@ -4,6 +4,7 @@ import com.github.natanbc.tiletools.Config;
 import com.github.natanbc.tiletools.init.Registration;
 import com.github.natanbc.tiletools.util.ClientUtils;
 import com.github.natanbc.tiletools.util.TextUtils;
+import com.github.natanbc.tiletools.util.WorldUtils;
 import net.minecraft.block.BedBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -176,9 +177,9 @@ public class TileInABottleItem extends Item {
             if(te == null) {
                 stored.putBoolean("has_te", false);
             } else {
-                world.removeTileEntity(pos);
                 stored.putBoolean("has_te", true);
                 stored.put("te", te.serializeNBT());
+                world.removeTileEntity(pos);
             }
             world.setBlockState(pos, Blocks.AIR.getDefaultState());
         } else {
@@ -207,8 +208,10 @@ public class TileInABottleItem extends Item {
             //allow doors and tall flowers to set the other block
             state.getBlock().onBlockPlacedBy(world, pos, state, context.getPlayer(), new ItemStack(state.getBlock()));
             if(stored.getBoolean("has_te")) {
-                TileEntity te = TileEntity.readTileEntity(state, stored.getCompound("te"));
-                world.setTileEntity(pos, te);
+                TileEntity te = world.getTileEntity(pos);
+                if(te != null) {
+                    te.read(state, WorldUtils.fixPosition(stored.getCompound("te"), pos));
+                }
             }
             if(context.getPlayer() == null || !context.getPlayer().isCreative()) {
                 if(getHarvestLevel(s) < ItemTier.NETHERITE.getHarvestLevel() ||

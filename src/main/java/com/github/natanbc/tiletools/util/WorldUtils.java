@@ -1,5 +1,6 @@
 package com.github.natanbc.tiletools.util;
 
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -14,6 +15,13 @@ public class WorldUtils {
                 center.getY() + radius,
                 center.getZ() + radius
         );
+    }
+    
+    public static CompoundNBT fixPosition(CompoundNBT nbt, BlockPos position) {
+        nbt.putInt("x", position.getX());
+        nbt.putInt("y", position.getY());
+        nbt.putInt("z", position.getZ());
+        return nbt;
     }
     
     public static double tps(World world) {
