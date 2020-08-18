@@ -1,0 +1,43 @@
+[
+  {
+    "target": { "item": "tiletools:tile_in_a_bottle" },
+    "text": [ "bottle_info1", "bottle_info2" ]
+  },
+  {
+    "target": { "item": "tiletools:acceleration_wand" },
+    "text": [ "wand_info1", "wand_info2" ]
+  },
+  {
+    "target": { "item": "tiletools:accelerator" },
+    "text": [ "accelerator_info", "redstone_disable" ]
+  },
+  {
+    "target": { "item": "tiletools:growth_accelerator" },
+    "text": [ "growth_accelerator_info", "redstone_disable" ]
+  },
+  {
+    "target": { "item": "tiletools:decelerator" },
+    "text": [ "decelerator_info", "redstone_disable" ]
+  },
+  {
+    "target": { "item": "tiletools:freezer" },
+    "text": [ "freezer_info", "redstone_disable" ]
+  },
+  {
+    "target": {
+      "item": "minecraft:enchanted_book",
+      "nbt": {
+        "StoredEnchantments": [ { "id": "tiletools:protect_te", "lvl": 1 } ]
+      }
+    },
+    "text": [ "protect_te_info" ]
+  },
+  {
+    "target": { "item": "tiletools:temporary_melter" },
+    "text": [ "melter_info1", "melter_info2" ]
+  },
+  {
+    "target": { "item": "tiletools:portable_freezer" },
+    "text": [ "portable_freezer_info1", "portable_freezer_info2" ]
+  }
+]
