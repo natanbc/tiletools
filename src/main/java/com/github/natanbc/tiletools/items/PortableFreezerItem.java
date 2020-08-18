@@ -1,5 +1,6 @@
 package com.github.natanbc.tiletools.items;
 
+import com.github.natanbc.tiletools.Config;
 import com.github.natanbc.tiletools.blocks.FrozenTile;
 import com.github.natanbc.tiletools.init.Registration;
 import net.minecraft.block.BlockState;
@@ -51,6 +52,9 @@ public class PortableFreezerItem extends Item {
                 read.read(f.getStoredState(), f.getStoredTileData());
             }
         } else {
+            if(Config.isPortableFreezerBlacklisted(te)) {
+                return ActionResultType.FAIL;
+            }
             BlockState oldState = w.getBlockState(pos);
             CompoundNBT teData = te.serializeNBT();
             w.removeTileEntity(pos);

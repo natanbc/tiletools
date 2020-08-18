@@ -45,6 +45,8 @@ public class Config {
     public static final ForgeConfigSpec.BooleanValue WAND_BAD_EFFECTS_ENABLED;
     public static final ForgeConfigSpec.IntValue WAND_BAD_EFFECTS_DURATION;
     
+    public static final ForgeConfigSpec.ConfigValue<List<? extends String>> PORTABLE_FREEZER_BLACKLIST;
+    
     static {
         ForgeConfigSpec.Builder client = new ForgeConfigSpec.Builder();
         ForgeConfigSpec.Builder common = new ForgeConfigSpec.Builder();
@@ -181,6 +183,12 @@ public class Config {
                     .defineInRange("bad_effects_duration", 100, 0, 1200);
         }
         
+        try(Section s = section(common, "portable_freezer")) {
+            PORTABLE_FREEZER_BLACKLIST = common
+                    .comment("List of tile entities that should not be frozen")
+                    .defineList("blacklist", Collections.emptyList(), _1 -> true);
+        }
+        
         CLIENT = client.build();
         COMMON = common.build();
         SERVER = server.build();
@@ -206,6 +214,10 @@ public class Config {
     
     public static boolean isTEWandBlacklisted(TileEntity te) {
         return isInList(WAND_TE_BLACKLIST.get(), te);
+    }
+    
+    public static boolean isPortableFreezerBlacklisted(TileEntity te) {
+        return isInList(PORTABLE_FREEZER_BLACKLIST.get(), te);
     }
     
     public static boolean isCropWandBlacklisted(BlockState state) {
