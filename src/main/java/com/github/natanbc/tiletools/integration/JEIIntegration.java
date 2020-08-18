@@ -1,5 +1,6 @@
 package com.github.natanbc.tiletools.integration;
 
+import com.github.natanbc.tiletools.TileTools;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -12,6 +13,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.CraftingHelper;
 
 import javax.annotation.Nonnull;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
@@ -25,11 +28,15 @@ public class JEIIntegration implements IModPlugin {
     
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-        JsonArray array = (JsonArray)new JsonStreamParser(
-                new InputStreamReader(JEIIntegration.class.getResourceAsStream(
-                        "/assets/tiletools/jei_info.json"
-                ), StandardCharsets.UTF_8)
-        ).next();
+        JsonArray array;
+        try(InputStream is = JEIIntegration.class.getResourceAsStream("/assets/tiletools/jei_info.json")) {
+            array = (JsonArray)new JsonStreamParser(
+                    new InputStreamReader(is, StandardCharsets.UTF_8)
+            ).next();
+        } catch(IOException e) {
+            TileTools.logger().error("Error loading JEI information", e);
+            return;
+        }
         for(JsonElement element : array) {
             JsonObject obj = element.getAsJsonObject();
             registration.addIngredientInfo(
