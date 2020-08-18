@@ -6,9 +6,12 @@
   "block.tiletools.freezer": "Block Freezer",
   "block.tiletools.growth_accelerator": "Growth Accelerator",
 
+  "block.tiletools.frozen_tile.name": "Frozen Block",
+
   "item.tiletools.tile_in_a_bottle": "§bTile in a Bottle§r",
   "item.tiletools.acceleration_wand": "§bAcceleration Wand§r",
   "item.tiletools.temporary_melter": "Temporary Melter",
+  "item.tiletools.portable_freezer": "Portable Freezer",
 
   "message.tiletools.bottle_block": "Stored block: %s",
   "message.tiletools.bottle_empty": "Empty",
@@ -26,6 +29,8 @@
   "message.tiletools.wand_info2": "While this item never breaks, overusing it is bad for your health.",
   "message.tiletools.melter_info1": "Temporarily melts a frozen machine.",
   "message.tiletools.melter_info2": "It's still not as fast as properly unfreezing it.",
+  "message.tiletools.portable_freezer_info1": "Portable version of the block freezer.",
+  "message.tiletools.portable_freezer_info2": "Sadly, it's too strong and blocks frozen by it can't be used very well.",
 
   "message.tiletools.accelerator_info": "Speeds up machines around it.",
   "message.tiletools.growth_accelerator_info": "Speeds up the growth of crops planted on the block above it.",

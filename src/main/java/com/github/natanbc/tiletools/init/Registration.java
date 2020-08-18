@@ -7,10 +7,13 @@ import com.github.natanbc.tiletools.blocks.DeceleratorBlock;
 import com.github.natanbc.tiletools.blocks.DeceleratorTile;
 import com.github.natanbc.tiletools.blocks.FreezerBlock;
 import com.github.natanbc.tiletools.blocks.FreezerTile;
+import com.github.natanbc.tiletools.blocks.FrozenBlock;
+import com.github.natanbc.tiletools.blocks.FrozenTile;
 import com.github.natanbc.tiletools.blocks.GrowthAcceleratorBlock;
 import com.github.natanbc.tiletools.blocks.GrowthAcceleratorTile;
 import com.github.natanbc.tiletools.crafting.TileInABottleUpgradeRecipe;
 import com.github.natanbc.tiletools.enchantment.ProtectTEEnchantment;
+import com.github.natanbc.tiletools.items.PortableFreezerItem;
 import com.github.natanbc.tiletools.items.TemporaryMelterItem;
 import com.github.natanbc.tiletools.items.TileInABottleItem;
 import com.github.natanbc.tiletools.items.AccelerationWandItem;
@@ -67,6 +70,12 @@ public class Registration {
     public static final RegistryObject<ProtectTEEnchantment> PROTECT_TE_ENCHANTMENT
             = ENCHANTMENTS.register("protect_te", ProtectTEEnchantment::new);
     
+    public static final RegistryObject<PortableFreezerItem> PORTABLE_FREEZER
+            = ITEMS.register("portable_freezer", PortableFreezerItem::new);
+    
+    public static final RegistryBlockWithTE<FrozenBlock, FrozenTile> FROZEN_TILE
+            = new RegistryBlockWithTE<>("frozen_tile", FrozenBlock::new, FrozenTile::new, false);
+    
     public static final RegistryBlockWithTE<AcceleratorBlock, AcceleratorTile> ACCELERATOR
             = new RegistryBlockWithTE<>("accelerator", AcceleratorBlock::new, AcceleratorTile::new);
     
@@ -88,21 +97,32 @@ public class Registration {
         private final RegistryObject<Item> item;
         private final RegistryObject<TileEntityType<TE>> tileEntity;
         
-        RegistryBlockWithTE(String name, Supplier<B> blockFactory, Supplier<TE> teFactory) {
+        RegistryBlockWithTE(String name, Supplier<B> blockFactory, Supplier<TE> teFactory, boolean registerItem) {
             this.name = name;
             this.block = BLOCKS.register(name, blockFactory);
-            this.item = ITEMS.register(name,
-                    () -> new BlockItem(block.get(), new Item.Properties().group(ITEM_GROUP)));
+            if(registerItem) {
+                this.item = ITEMS.register(name,
+                        () -> new BlockItem(block.get(), new Item.Properties().group(ITEM_GROUP)));
+            } else {
+                this.item = null;
+            }
             //noinspection ConstantConditions
             this.tileEntity = TILES.register(name,
                     () -> TileEntityType.Builder.create(teFactory, block.get()).build(null));
+        }
+    
+        RegistryBlockWithTE(String name, Supplier<B> blockFactory, Supplier<TE> teFactory) {
+            this(name, blockFactory, teFactory, true);
         }
         
         public String name() { return name; }
         
         public B block() { return block.get(); }
         
-        public Item item() { return item.get(); }
+        public Item item() {
+            if(item == null) throw new IllegalStateException("There's no item for " + name);
+            return item.get();
+        }
         
         public TileEntityType<TE> tileEntityType() { return tileEntity.get(); }
     }
