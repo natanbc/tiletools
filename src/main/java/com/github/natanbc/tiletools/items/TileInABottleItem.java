@@ -41,6 +41,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.util.FakePlayer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -133,6 +134,9 @@ public class TileInABottleItem extends Item {
     @Override
     public ActionResultType onItemUse(ItemUseContext context) {
         if(context.getHand() != Hand.MAIN_HAND) return super.onItemUse(context);
+        if(context.getPlayer() == null || context.getPlayer() instanceof FakePlayer) {
+            return ActionResultType.FAIL;
+        }
         ItemStack s = context.getItem();
         CompoundNBT stored = s.getChildTag("stored_tile");
         World world = context.getWorld();
