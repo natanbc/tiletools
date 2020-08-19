@@ -6,6 +6,7 @@
   "block.tiletools.freezer": "Block Freezer",
   "block.tiletools.growth_accelerator": "Growth Accelerator",
 
+  "block.tiletools.frozen_tile": "Frozen Block",
   "block.tiletools.frozen_tile.name": "Frozen Block",
 
   "item.tiletools.tile_in_a_bottle": "§bTile in a Bottle§r",

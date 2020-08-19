@@ -10,6 +10,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ToolType;
 
 import javax.annotation.Nonnull;
 
@@ -17,7 +18,9 @@ public class GrowthAcceleratorBlock extends Block {
     public GrowthAcceleratorBlock() {
         super(Block.Properties.create(Material.EARTH)
                       .sound(SoundType.GROUND)
-                      .hardnessAndResistance(2.0f));
+                      .hardnessAndResistance(2.0f)
+                      .harvestTool(ToolType.SHOVEL)
+        );
     }
     
     @Override

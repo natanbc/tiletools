@@ -6,10 +6,12 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemTier;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ToolType;
 
 import javax.annotation.Nonnull;
 
@@ -18,6 +20,8 @@ public class AcceleratorBlock extends Block {
         super(Block.Properties.create(Material.IRON)
                       .sound(SoundType.METAL)
                       .hardnessAndResistance(2.0f)
+                      .harvestLevel(ItemTier.IRON.getHarvestLevel())
+                      .harvestTool(ToolType.PICKAXE)
         );
     }
     

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "tiletools:block/freezer"
+    }
+  }
+}

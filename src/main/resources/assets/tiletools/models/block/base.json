@@ -1,0 +1,13 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "tiletools:block/top_bottom",
+    "up": "tiletools:block/top_bottom",
+    "north": "#side",
+    "south": "#side",
+    "east": "#side",
+    "west": "#side",
+
+    "particle": "tiletools:block/top_bottom"
+  }
+}

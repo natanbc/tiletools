@@ -1,0 +1,6 @@
+{
+  "parent": "tiletools:block/base",
+  "textures": {
+    "side": "tiletools:block/growth_accelerator"
+  }
+}
