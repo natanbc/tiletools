@@ -12,6 +12,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.common.Mod;
 
@@ -30,6 +31,7 @@ public class PortableFreezerItem extends Item {
     @Override
     public ActionResultType onItemUse(ItemUseContext context) {
         World w = context.getWorld();
+        if(w.isRemote) return ActionResultType.CONSUME;
         BlockPos pos = context.getPos();
         PlayerEntity player = context.getPlayer();
         if(player == null || player instanceof FakePlayer) {
@@ -63,9 +65,11 @@ public class PortableFreezerItem extends Item {
             TileEntity frozenTe = w.getTileEntity(pos);
             if(frozenTe instanceof FrozenTile) {
                 ((FrozenTile)frozenTe).init(oldState, teData);
+                //Update client tile entity
+                w.notifyBlockUpdate(pos, frozenState, frozenState, Constants.BlockFlags.DEFAULT);
             }
         }
         context.getItem().damageItem(1, player, _1 -> {});
-        return ActionResultType.SUCCESS;
+        return ActionResultType.CONSUME;
     }
 }

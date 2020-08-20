@@ -7,10 +7,13 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.lang.invoke.MethodHandle;
 
 public class FrozenTile extends TileEntity {
@@ -85,6 +88,19 @@ public class FrozenTile extends TileEntity {
     @Override
     public void handleUpdateTag(BlockState state, CompoundNBT tag) {
         read(state, tag);
+    }
+    
+    @Nullable
+    @Override
+    public SUpdateTileEntityPacket getUpdatePacket() {
+        return tag == null ? null : new SUpdateTileEntityPacket(pos, 1, tag);
+    }
+    
+    @Override
+    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+        tag = pkt.getNbtCompound();
+        cachedState = null;
+        cachedTile = null;
     }
     
     @Override
