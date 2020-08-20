@@ -14,11 +14,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.fml.common.Mod;
 
 import javax.annotation.Nonnull;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class PortableFreezerItem extends Item {
     public PortableFreezerItem() {
         super(new Item.Properties()
