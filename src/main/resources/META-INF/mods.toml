@@ -23,6 +23,6 @@ A bunch of utilities for dealing with tile entities
 [[dependencies.tiletools]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16.1]"
+    versionRange="[1.16.1,)"
     ordering="NONE"
     side="BOTH"
